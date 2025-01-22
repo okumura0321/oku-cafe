@@ -23,8 +23,8 @@ const DayComponent: FC = () => (
         color: dayTheme.palette.text.primary,
       }}
     >
-      <Typography variant="h3" gutterBottom>
-        Day Menu
+      <Typography variant="h4" gutterBottom>
+        Drinks
       </Typography>
       <Box component="ul" sx={{ listStyle: 'none', padding: 0 }}>
         <Box component="li" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
@@ -36,12 +36,21 @@ const DayComponent: FC = () => (
           <Typography variant="h6">Tea</Typography>
         </Box>
         <Box component="li" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
-          <img src="/images/sandwich.jpg" alt="Sandwich" style={{ width: '50px', marginRight: '10px' }} />
-          <Typography variant="h6">Sandwich</Typography>
+          <img src="/images/juice.jpg" alt="Juice" style={{ width: '50px', marginRight: '10px' }} />
+          <Typography variant="h6">Orange Juice</Typography>
+        </Box>
+      </Box>
+      <Typography variant="h4" gutterBottom>
+        Kids Menu
+      </Typography>
+      <Box component="ul" sx={{ listStyle: 'none', padding: 0 }}>
+        <Box component="li" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
+          <img src="/images/sandwich.jpg" alt="Mini Sandwich" style={{ width: '50px', marginRight: '10px' }} />
+          <Typography variant="h6">Mini Sandwich</Typography>
         </Box>
         <Box component="li" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
-          <img src="/images/salad.jpg" alt="Salad" style={{ width: '50px', marginRight: '10px' }} />
-          <Typography variant="h6">Salad</Typography>
+          <img src="/images/salad.jpg" alt="Fruit Salad" style={{ width: '50px', marginRight: '10px' }} />
+          <Typography variant="h6">Fruit Salad</Typography>
         </Box>
       </Box>
     </Box>

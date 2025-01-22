@@ -24,7 +24,7 @@ const NightComponent: FC = () => (
       }}
     >
       <Typography variant="h3" gutterBottom>
-        Night Menu
+        Alcohol Menu
       </Typography>
       <Box component="ul" sx={{ listStyle: 'none', padding: 0 }}>
         <Box component="li" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>

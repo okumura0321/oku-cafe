@@ -10,10 +10,14 @@ const Home: FC = () => {
   const [tabIndex, setTabIndex] = useState<number>(0);
 
   useEffect(() => {
-    // Access localStorage only on the client side
+    // Determine the initial tab based on the time and localStorage
     const savedIndex = localStorage.getItem('tabIndex');
     if (savedIndex) {
       setTabIndex(parseInt(savedIndex, 10));
+    } else {
+      const currentHour = new Date().getHours();
+      // Default to NIGHT if it's outside of 9:00 to 17:00
+      setTabIndex(currentHour >= 9 && currentHour < 18 ? 0 : 1);
     }
   }, []);
 
