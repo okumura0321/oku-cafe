@@ -27,8 +27,8 @@ const nightMenuItems = [
       { name: 'カシス', image: '/images/cassis.jpg', description: '' },
       { name: 'ミスティア', image: '/images/mistia.jpg', description: '' },
     ]},
-  { category: 'ウイスキー', items: [
-      { name: 'ロック', image: '/images/whiskey.jpg', description: '' },
+  { category: 'Whisky', items: [
+      { name: 'ロック', image: '/images/Whisky.jpg', description: '' },
       { name: 'ハイボール・ジンジャーハイボール', image: '/images/highball.png', description: '' },
     ]},
 ];
