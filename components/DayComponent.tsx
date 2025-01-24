@@ -18,6 +18,7 @@ const menuItems = [
   { category: 'Drinks', items: [
     { name: 'ホットコーヒー', image: '/images/hot-coffee.jpg', description: '' },
     { name: 'アイスコーヒー', image: '/images/ice-coffee.jpg', description: '' },
+    { name: 'カフェオレ', image: '/images/Cafeaulait.jpg', description: '' },
     { name: '紅茶', image: '/images/hot-tea.jpg', description: 'レモンティーor\nミルクティー' },
     { name: 'アイスティー', image: '/images/ice-tea.jpg', description: 'レモンティーor\nミルクティー' },
   ]},
