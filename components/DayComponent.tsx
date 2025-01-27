@@ -2,10 +2,17 @@ import React, { FC } from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Image from 'next/image';
+import { Kiwi_Maru } from 'next/font/google';
+
+const kiwiMaru = Kiwi_Maru({
+  weight: ['400', '500'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 const dayTheme = createTheme({
   typography: {
-    fontFamily: 'Futura, Arial, sans-serif',
+    fontFamily: '"Kiwi Maru", serif',
   },
   palette: {
     background: {
@@ -24,7 +31,7 @@ const menuItems = [
     { name: 'フレーバー', image: '/images/flavor.jpg', description: '・レモンティー\n・はちみつ\n' },
   ]},
   { category: 'Kids Menu', items: [
-    { name: '水', image: '/images/water.png', description: '' },
+    { name: 'お水', image: '/images/water.png', description: '' },
     { name: 'お茶', image: '/images/tea.jpg', description: '・緑茶\n・麦茶' },
     { name: 'ジュース', image: '/images/orange-juice.jpg', description: '・オレンジ\n・りんご\n・ぶどう' },
     { name: 'ミルク', image: '/images/milk.png', description: '・アイス\n・ホット' },
@@ -33,7 +40,7 @@ const menuItems = [
 
 const DayComponent: FC = () => (
   <ThemeProvider theme={dayTheme}>
-    <div>
+    <div className={kiwiMaru.className}>
       <Box
         sx={{
           padding: 4,
@@ -52,10 +59,10 @@ const DayComponent: FC = () => (
                 <Grid item xs={12} sm={6} key={item.name}>
                   <Box sx={{ display: 'flex', gap: 2, alignItems: 'left' }}>
                     <Box sx={{ flexShrink: 0 }}>
-                      <Image src={item.image} alt={item.name} width={150} height={150} style={{ borderRadius: '8px' }} />
+                      <Image src={item.image} alt={item.name} width={160} height={160} style={{ borderRadius: '8px' }} />
                     </Box>
                     <Box>
-                      <Typography variant="h6" gutterBottom sx={{ textAlign: 'left' }}>
+                      <Typography variant="h5" gutterBottom sx={{ textAlign: 'left' }}>
                         {item.name}
                       </Typography>
                       <Typography variant="body1" color="textSecondary" sx={{ whiteSpace: 'pre-line', textAlign: 'left' }}>
