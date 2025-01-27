@@ -4,6 +4,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Image from 'next/image';
 
 const dayTheme = createTheme({
+  typography: {
+    fontFamily: 'Futura, Arial, sans-serif',
+  },
   palette: {
     background: {
       default: '#FFFBCC',
@@ -30,41 +33,43 @@ const menuItems = [
 
 const DayComponent: FC = () => (
   <ThemeProvider theme={dayTheme}>
-    <Box
-      sx={{
-        padding: 4,
-        backgroundColor: dayTheme.palette.background.default,
-        minHeight: '100vh',
-        color: dayTheme.palette.text.primary,
-      }}
-    >
-      {menuItems.map((menu) => (
-        <Box key={menu.category} sx={{ marginBottom: 6 }}>
-          <Typography variant="h3" gutterBottom>
-            {menu.category}
-          </Typography>
-          <Grid container spacing={4}>
-            {menu.items.map((item) => (
-              <Grid item xs={12} sm={6} key={item.name}>
-                <Box sx={{ display: 'flex', gap: 2, alignItems: 'left' }}>
-                  <Box sx={{ flexShrink: 0 }}>
-                    <Image src={item.image} alt={item.name} width={150} height={150} style={{ borderRadius: '8px' }} />
+    <div>
+      <Box
+        sx={{
+          padding: 4,
+          backgroundColor: dayTheme.palette.background.default,
+          minHeight: '100vh',
+          color: dayTheme.palette.text.primary,
+        }}
+      >
+        {menuItems.map((menu) => (
+          <Box key={menu.category} sx={{ marginBottom: 6 }}>
+            <Typography variant="h3" gutterBottom>
+              {menu.category}
+            </Typography>
+            <Grid container spacing={4}>
+              {menu.items.map((item) => (
+                <Grid item xs={12} sm={6} key={item.name}>
+                  <Box sx={{ display: 'flex', gap: 2, alignItems: 'left' }}>
+                    <Box sx={{ flexShrink: 0 }}>
+                      <Image src={item.image} alt={item.name} width={150} height={150} style={{ borderRadius: '8px' }} />
+                    </Box>
+                    <Box>
+                      <Typography variant="h6" gutterBottom sx={{ textAlign: 'left' }}>
+                        {item.name}
+                      </Typography>
+                      <Typography variant="body1" color="textSecondary" sx={{ whiteSpace: 'pre-line', textAlign: 'left' }}>
+                        {item.description}
+                      </Typography>
+                    </Box>
                   </Box>
-                  <Box>
-                    <Typography variant="h6" gutterBottom sx={{ textAlign: 'left' }}>
-                      {item.name}
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary" sx={{ whiteSpace: 'pre-line', textAlign: 'left' }}>
-                      {item.description}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      ))}
-    </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        ))}
+      </Box>
+    </div>
   </ThemeProvider>
 );
 

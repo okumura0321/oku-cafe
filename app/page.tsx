@@ -5,6 +5,13 @@ import { Tabs, Tab, Box } from '@mui/material';
 import { useState } from 'react';
 import DayComponent from '@/components/DayComponent';
 import NightComponent from '@/components/NightComponent';
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 const Home: FC = () => {
   const [tabIndex, setTabIndex] = useState<number>(0);
@@ -27,7 +34,7 @@ const Home: FC = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center', fontFamily: 'Arial, sans-serif' }}>
+    <div className={poppins.className} style={{ textAlign: 'center' }}>
       <Box
         sx={{
           backgroundColor: '#f4f4f4',
