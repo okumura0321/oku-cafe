@@ -16,18 +16,15 @@ const dayTheme = createTheme({
 
 const menuItems = [
   { category: 'Drinks', items: [
-    { name: 'ホットコーヒー', image: '/images/hot-coffee.jpg', description: '' },
-    { name: 'アイスコーヒー', image: '/images/ice-coffee.jpg', description: '' },
-    { name: 'カフェオレ', image: '/images/Cafeaulait.jpg', description: '' },
-    { name: '紅茶', image: '/images/hot-tea.jpg', description: 'レモンティーor\nミルクティー' },
-    { name: 'アイスティー', image: '/images/ice-tea.jpg', description: 'レモンティーor\nミルクティー' },
+    { name: 'コーヒー', image: '/images/hot-coffee.jpg', description: '・ホット\n・アイス\n・カフェオレ' },
+    { name: '紅茶', image: '/images/hot-tea.jpg', description: '・ホット\n・アイス' },
+    { name: 'フレーバー', image: '/images/flavor.jpg', description: '・レモンティー\n・はちみつ\n' },
   ]},
   { category: 'Kids Menu', items: [
-    { name: '水', image: '/images/water.png', description: 'ミネラルウォーター' },
-    { name: 'お茶', image: '/images/tea.jpg', description: 'ウーロン茶or麦茶' },
-    { name: 'オレンジジュース', image: '/images/orange-juice.jpg', description: 'フレッシュ100%' },
-    { name: 'リンゴジュース', image: '/images/apple-juice.jpg', description: 'りんごぉ' },
-    { name: 'ミルク', image: '/images/milk.png', description: '' },
+    { name: '水', image: '/images/water.png', description: '' },
+    { name: 'お茶', image: '/images/tea.jpg', description: '・緑茶\n・麦茶' },
+    { name: 'ジュース', image: '/images/orange-juice.jpg', description: '・オレンジ\n・りんご\n・ぶどう' },
+    { name: 'ミルク', image: '/images/milk.png', description: '・アイス\n・ホット' },
   ]}
 ];
 
@@ -49,12 +46,12 @@ const DayComponent: FC = () => (
           <Grid container spacing={4}>
             {menu.items.map((item) => (
               <Grid item xs={12} sm={6} key={item.name}>
-                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', gap: 2, alignItems: 'left' }}>
                   <Box sx={{ flexShrink: 0 }}>
-                    <Image src={item.image} alt={item.name} width={120} height={120} style={{ borderRadius: '8px' }} />
+                    <Image src={item.image} alt={item.name} width={150} height={150} style={{ borderRadius: '8px' }} />
                   </Box>
                   <Box>
-                    <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
+                    <Typography variant="h6" gutterBottom sx={{ textAlign: 'left' }}>
                       {item.name}
                     </Typography>
                     <Typography variant="body1" color="textSecondary" sx={{ whiteSpace: 'pre-line', textAlign: 'left' }}>
