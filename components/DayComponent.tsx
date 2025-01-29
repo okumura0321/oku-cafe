@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react';
-import { Box, Typography, Grid, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import React, { FC } from 'react';
+import { Box, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Image from 'next/image';
@@ -62,7 +62,7 @@ const DayComponent: FC = () => (
                   <Box key={item.name} sx={{ width: { xs: '100%', sm: '48%', md: '30%' }, display: 'flex', gap: 2, alignItems: 'left' }}>
                     <Box sx={{ display: 'flex', gap: 2, alignItems: 'left' }}>
                       <Box sx={{ flexShrink: 0 }}>
-                        <Image src={item.image} alt={item.name} width={150} height={150} style={{ borderRadius: '8px' }} />
+                        <Image src={item.image} alt={item.name} width={160} height={160} style={{ borderRadius: '8px' }} />
                       </Box>
                       <Box>
                         <Typography variant="h5" gutterBottom sx={{ textAlign: 'left', fontWeight: 550 }}>
