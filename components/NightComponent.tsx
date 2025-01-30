@@ -35,7 +35,7 @@ const nightMenuItems = [
   {
     category: "Beer",
     items: [
-      { name: "キリン", image: "/images/kirin.png", description: "・一番搾り" },
+      { name: "キリン", image: "/images/kirin.jpg", description: "・一番搾り" },
       {
         name: "アサヒ",
         image: "/images/asahi.jpg",
@@ -85,21 +85,22 @@ const nightMenuItems = [
   },
   {
     category: "Whisky",
+    note: "ﾛｯｸ / ﾊｲﾎﾞｰﾙ / ｼﾞﾝｼﾞｬｰﾊｲﾎﾞｰﾙ",
     items: [
       {
         name: "MACALLAN",
         image: "/images/macallan.jpg",
-        description: "・ﾛｯｸ\n・ﾊｲﾎﾞｰﾙ",
+        description: "(ｽｺｯﾁ)",
       },
       {
         name: "JACK DANIELS",
         image: "/images/jack.jpg",
-        description: "・ﾛｯｸ\n・ﾊｲﾎﾞｰﾙ\n・ｼﾞﾝｼﾞｬｰﾊｲﾎﾞｰﾙ",
+        description: "(ｱﾒﾘｶﾝ)",
       },
       {
         name: "角",
         image: "/images/kaku.jpg",
-        description: "・ﾛｯｸ\n・ﾊｲﾎﾞｰﾙ\n・ｼﾞﾝｼﾞｬｰﾊｲﾎﾞｰﾙ",
+        description: "(ｼﾞｬﾊﾟﾆｰｽﾞ)",
       },
     ],
   },
@@ -163,6 +164,14 @@ const NightComponent: FC = () => (
                   margin: "0 auto",
                 }}
               >
+                {menu.note && (
+                  <Typography
+                    variant="h6"
+                    sx={{ textAlign: "left", fontStyle: "italic", mb: 1 }}
+                  >
+                    {menu.note}
+                  </Typography>
+                )}
                 {menu.items.map((item) => (
                   <Box
                     key={item.name}
