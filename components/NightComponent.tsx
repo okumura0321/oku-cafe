@@ -41,6 +41,11 @@ const nightMenuItems = [
         image: "/images/asahi.jpg",
         description: "・ｽｰﾊﾟｰﾄﾞﾗｲ",
       },
+      {
+        name: "Blend",
+        image: "/images/shandygaff.jpg",
+        description: "・ｼｬﾝﾃﾞｨｶﾞﾌ\n・ｺｰｸﾋﾞｱ\n・ﾊﾟﾅｼｪ\n・ｶｼｽﾋﾞｱ",
+      },
     ],
   },
   {
@@ -49,33 +54,32 @@ const nightMenuItems = [
       {
         name: "Gin",
         image: "/images/gin.jpg",
-        description: "・ｼﾞﾝﾄﾆｯｸ\n・ｼﾞﾝﾗｲﾑ\n・ｼﾞﾝﾘｯｷｰ",
+        description: "・ｼﾞﾝﾄﾆｯｸ\n・ｼﾞﾝﾊﾞｯｸ\n・ｵﾚﾝｼﾞﾌﾞﾛｯｻﾑ\n・ｷﾞﾑﾚｯﾄ",
       },
       {
         name: "Vodka",
         image: "/images/vodka.jpg",
-        description: "・ｳｫｯｶﾄﾆｯｸ\n・ﾓｽｺﾐｭｰﾙ\n・ｽｸﾘｭｰﾄﾞﾗｲﾊﾞｰ",
+        description: "・ｳｫｯｶﾄﾆｯｸ\n・ﾓｽｺﾐｭｰﾙ\n・ｽｸﾘｭｰﾄﾞﾗｲﾊﾞｰ\n・ﾌﾞﾙﾄﾞｯｸ",
       },
       {
         name: "Rum",
         image: "/images/rum.jpg",
-        description: "・ﾗﾑｺｰｸ\n・ﾗﾑﾄﾆｯｸ\n",
+        description: "・ﾗﾑｺｰｸ\n・ﾗﾑﾄﾆｯｸ\n・ｷｭｰﾊﾞﾝｽｸﾘｭｰ\n・ﾊﾞｶﾙﾃﾞｨ",
       },
-      { name: "Dita", image: "/images/dita.jpg", description: "・ﾃﾞｨﾀﾄﾆｯｸ" },
+      {
+        name: "Dita",
+        image: "/images/dita.jpg",
+        description: "・ﾗｲﾁｵﾚﾝｼﾞ\n・ﾁｬｲﾅﾌﾞﾙｰ\n・ｱﾝｼｬﾝﾃ\n・ﾚﾃﾞｨﾃﾞｲ",
+      },
       {
         name: "Cassis",
         image: "/images/cassis.jpg",
-        description: "・ｶｼｽｵﾚﾝｼﾞ\n・ｶｼｽｿｰﾀﾞ",
+        description: "・ｶｼｽﾊﾞｯｸ\n・ｶｼｽｵﾚﾝｼﾞ\n・ｶｼｽﾐﾙｸ\n・ｵｰﾛﾗ",
       },
       {
         name: "Mistia",
         image: "/images/mistia.jpg",
-        description: "・ﾐｽﾃｨｱｿｰﾀﾞ",
-      },
-      {
-        name: "Beer",
-        image: "/images/shandygaff.jpg",
-        description: "・ｼｬﾝﾃﾞｨｶﾞﾌ\n・ｺｰｸﾋﾞｱ\n・ﾊﾟﾅｼｪ\n・ｶｼｽﾋﾞｱ",
+        description: "・ﾐｽﾃｨｱﾄﾆｯｸ\n・ﾐｽﾃｨｱﾊﾞｯｸ\n・ｻﾝﾗｲｽﾞ\n・ﾌﾞﾗﾝ",
       },
     ],
   },
@@ -86,6 +90,11 @@ const nightMenuItems = [
         name: "MACALLAN",
         image: "/images/macallan.jpg",
         description: "・ﾛｯｸ\n・ﾊｲﾎﾞｰﾙ",
+      },
+      {
+        name: "JACK DANIELS",
+        image: "/images/jack.jpg",
+        description: "・ﾛｯｸ\n・ﾊｲﾎﾞｰﾙ\n・ｼﾞﾝｼﾞｬｰﾊｲﾎﾞｰﾙ",
       },
       {
         name: "角",
@@ -118,9 +127,6 @@ const NightComponent: FC = () => (
           >
             夜のメニュー
           </Typography>
-          <Typography variant="body1" sx={{ mt: 2, fontSize: "1.2rem" }}>
-            カクテルやウィスキーなど、特別な時間を彩るドリンクをご用意しています。
-          </Typography>
         </Box>
 
         {nightMenuItems.map((menu) => (
@@ -128,7 +134,11 @@ const NightComponent: FC = () => (
             key={menu.category}
             sx={{ backgroundColor: nightTheme.palette.background.default }}
           >
-            <AccordionSummary expandIcon={<KeyboardArrowDownIcon sx={{ color: 'gold', fontSize: 30 }} />}>
+            <AccordionSummary
+              expandIcon={
+                <KeyboardArrowDownIcon sx={{ color: "gold", fontSize: 30 }} />
+              }
+            >
               <Typography
                 variant="h4"
                 sx={{

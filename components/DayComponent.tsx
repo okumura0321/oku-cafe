@@ -94,9 +94,6 @@ const DayComponent: FC = () => (
           >
             昼のメニュー
           </Typography>
-          <Typography variant="body1" sx={{ mt: 2, fontSize: "1.2rem" }}>
-            コーヒーや紅茶など、お昼のひとときを楽しむドリンクをご用意しています。
-          </Typography>
         </Box>
 
         {menuItems.map((menu) => (
