@@ -5,6 +5,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Card,
+  CardMedia,
+  CardContent,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Image from "next/image";
@@ -36,11 +39,7 @@ const nightMenuItems = [
     category: "Beer",
     items: [
       { name: "キリン", image: "/images/kirin.jpg", description: "・一番搾り" },
-      {
-        name: "アサヒ",
-        image: "/images/asahi.jpg",
-        description: "・ｽｰﾊﾟｰﾄﾞﾗｲ",
-      },
+      { name: "アサヒ", image: "/images/asahi.jpg", description: "・ｽｰﾊﾟｰﾄﾞﾗｲ" },
       {
         name: "Blend",
         image: "/images/shandygaff.jpg",
@@ -117,98 +116,93 @@ const NightComponent: FC = () => (
           color: nightTheme.palette.text.primary,
         }}
       >
-        <Box sx={{ textAlign: "left", mb: 4 }}>
+        <Box sx={{ textAlign: "center", mb: 4 }}>
           <Typography
             variant="h3"
             sx={{
               fontWeight: "bold",
-              borderBottom: "3px solid white",
-              paddingBottom: "10px",
+              borderBottom: "4px solid #FFC107",
+              display: "inline-block",
+              pb: 1,
             }}
           >
-            夜のメニュー
+            夜メニュー
           </Typography>
         </Box>
 
         {nightMenuItems.map((menu) => (
           <Accordion
             key={menu.category}
-            sx={{ backgroundColor: nightTheme.palette.background.default }}
+            sx={{
+              backgroundColor: "rgba(30, 30, 47, 0.8)",
+              borderRadius: "12px",
+              mb: 2,
+              boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+              "&:before": { display: "none" },
+            }}
           >
             <AccordionSummary
-              expandIcon={
-                <KeyboardArrowDownIcon sx={{ color: "gold", fontSize: 30 }} />
-              }
+              expandIcon={<KeyboardArrowDownIcon sx={{ color: "#FFC107", fontSize: 30 }} />}
+              sx={{ borderRadius: "12px" }}
             >
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: "bold",
-                  borderBottom: "2px solid white",
-                  paddingBottom: "4px",
-                }}
-              >
+              <Typography variant="h4" sx={{ fontWeight: "bold", color: "#FFC107" }}>
                 {menu.category}
               </Typography>
             </AccordionSummary>
-            <AccordionDetails
-              sx={{ backgroundColor: nightTheme.palette.background.default }}
-            >
+            <AccordionDetails>
               <Box
                 sx={{
                   display: "flex",
                   flexWrap: "wrap",
                   gap: 2,
                   justifyContent: "center",
-                  maxWidth: "1000px",
-                  margin: "0 auto",
                 }}
               >
                 {menu.note && (
                   <Typography
                     variant="h6"
-                    sx={{ textAlign: "left", fontStyle: "italic", mb: 1 }}
+                    sx={{ textAlign: "center", fontStyle: "italic", width: "100%", mb: 1 }}
                   >
                     {menu.note}
                   </Typography>
                 )}
                 {menu.items.map((item) => (
-                  <Box
+                  <Card
                     key={item.name}
                     sx={{
                       width: { xs: "100%", sm: "48%", md: "30%" },
                       display: "flex",
-                      gap: 2,
-                      alignItems: "left",
+                      flexDirection: "column",
+                      borderRadius: "12px",
+                      boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+                      transition: "transform 0.3s ease",
+                      "&:hover": { transform: "scale(1.03)" },
+                      backgroundColor: "#2E2E3F",
                     }}
                   >
-                    <Box sx={{ display: "flex", gap: 2, alignItems: "left" }}>
-                      <Box sx={{ flexShrink: 0 }}>
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          width={140}
-                          height={140}
-                          style={{ borderRadius: "8px" }}
-                        />
-                      </Box>
-                      <Box>
-                        <Typography
-                          variant="h5"
-                          gutterBottom
-                          sx={{ textAlign: "left", fontWeight: 550 }}
-                        >
-                          {item.name}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          sx={{ whiteSpace: "pre-line", textAlign: "left" }}
-                        >
-                          {item.description}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
+                    <CardMedia>
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={300}
+                        height={200}
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          borderTopLeftRadius: "12px",
+                          borderTopRightRadius: "12px",
+                        }}
+                      />
+                    </CardMedia>
+                    <CardContent>
+                      <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
+                        {item.name}
+                      </Typography>
+                      <Typography variant="body1" sx={{ whiteSpace: "pre-line", lineHeight: 1.5 }}>
+                        {item.description}
+                      </Typography>
+                    </CardContent>
+                  </Card>
                 ))}
               </Box>
             </AccordionDetails>

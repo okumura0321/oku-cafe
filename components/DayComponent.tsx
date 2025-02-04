@@ -5,6 +5,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Card,
+  CardMedia,
+  CardContent,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Image from "next/image";
@@ -23,7 +26,7 @@ const dayTheme = createTheme({
   },
   palette: {
     background: {
-      default: "#FFFBCC",
+      default: "#FFF9E3",
     },
     text: {
       primary: "#333333",
@@ -83,87 +86,84 @@ const DayComponent: FC = () => (
           color: dayTheme.palette.text.primary,
         }}
       >
-        <Box sx={{ textAlign: "left", mb: 4 }}>
+        <Box sx={{ textAlign: "center", mb: 4 }}>
           <Typography
             variant="h3"
             sx={{
               fontWeight: "bold",
-              borderBottom: "3px solid black",
-              paddingBottom: "10px",
+              borderBottom: "4px solid #FF5722",
+              display: "inline-block",
+              pb: 1,
             }}
           >
-            昼のメニュー
+            昼メニュー
           </Typography>
         </Box>
 
         {menuItems.map((menu) => (
           <Accordion
             key={menu.category}
-            sx={{ backgroundColor: dayTheme.palette.background.default }}
+            sx={{
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              borderRadius: "12px",
+              mb: 2,
+              boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+              "&:before": { display: "none" },
+            }}
           >
-            <AccordionSummary expandIcon={<KeyboardArrowDown sx={{ color: 'brown', fontSize: 30 }} />}            >
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: "bold",
-                  borderBottom: "2px solid black",
-                  paddingBottom: "4px",
-                }}
-              >
+            <AccordionSummary
+              expandIcon={<KeyboardArrowDown sx={{ color: "#FF5722", fontSize: 30 }} />}
+              sx={{ borderRadius: "12px" }}
+            >
+              <Typography variant="h4" sx={{ fontWeight: "bold", color: "#FF5722" }}>
                 {menu.category}
               </Typography>
             </AccordionSummary>
-            <AccordionDetails
-              sx={{ backgroundColor: dayTheme.palette.background.default }}
-            >
+            <AccordionDetails>
               <Box
                 sx={{
                   display: "flex",
                   flexWrap: "wrap",
                   gap: 2,
                   justifyContent: "center",
-                  maxWidth: "1000px",
-                  margin: "0 auto",
                 }}
               >
                 {menu.items.map((item) => (
-                  <Box
+                  <Card
                     key={item.name}
                     sx={{
                       width: { xs: "100%", sm: "48%", md: "30%" },
                       display: "flex",
-                      gap: 2,
-                      alignItems: "left",
+                      flexDirection: "column",
+                      borderRadius: "12px",
+                      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                      transition: "transform 0.3s ease",
+                      "&:hover": { transform: "scale(1.03)" },
                     }}
                   >
-                    <Box sx={{ display: "flex", gap: 2, alignItems: "left" }}>
-                      <Box sx={{ flexShrink: 0 }}>
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          width={150}
-                          height={150}
-                          style={{ borderRadius: "8px" }}
-                        />
-                      </Box>
-                      <Box>
-                        <Typography
-                          variant="h5"
-                          gutterBottom
-                          sx={{ textAlign: "left", fontWeight: 550 }}
-                        >
-                          {item.name}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          color="textSecondary"
-                          sx={{ whiteSpace: "pre-line", textAlign: "left" }}
-                        >
-                          {item.description}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
+                    <CardMedia>
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={300}
+                        height={200}
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          borderTopLeftRadius: "12px",
+                          borderTopRightRadius: "12px",
+                        }}
+                      />
+                    </CardMedia>
+                    <CardContent>
+                      <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
+                        {item.name}
+                      </Typography>
+                      <Typography variant="body1" sx={{ whiteSpace: "pre-line", lineHeight: 1.5 }}>
+                        {item.description}
+                      </Typography>
+                    </CardContent>
+                  </Card>
                 ))}
               </Box>
             </AccordionDetails>

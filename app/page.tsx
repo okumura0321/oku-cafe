@@ -34,43 +34,46 @@ const Home: FC = () => {
     <div
       className={oswald.className}
       style={{
-        textAlign: "center",
-        backgroundColor: tabIndex === 0 ? "#f5f5f5" : "#333",
-        transition: "background-color 0.3s ease-in-out",
+        minHeight: "100vh",
+        padding: "20px",
+        transition: "background 0.5s ease-in-out",
+        background: tabIndex === 0
+          ? "linear-gradient(135deg, #FFFDE4, #FFF1BA)"
+          : "linear-gradient(135deg, #2C3E50, #4CA1AF)",
       }}
     >
       <Box
         sx={{
-          backgroundColor: tabIndex === 0 ? "#e0f7fa" : "#333",
-          borderBottom: 1,
-          borderColor: "divider",
-          transition: "background-color 0.3s ease-in-out",
+          backgroundColor: "transparent",
+          borderRadius: "12px",
+          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+          mb: 4,
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <Tabs
           value={tabIndex}
           onChange={handleTabChange}
-          centered
-          textColor="primary"
-          indicatorColor="primary"
+          textColor="inherit"
+          indicatorColor="secondary"
           TabIndicatorProps={{
             style: {
-              backgroundColor: "#007FFF",
-              height: "3px",
+              backgroundColor: tabIndex === 0 ? "#FFC107" : "#FF5722",
+              height: "4px",
+              borderRadius: "4px",
             },
           }}
           sx={{
             "& .MuiTab-root": {
-              fontSize: "18px",
+              fontSize: "1.1rem",
               fontWeight: 600,
-              fontFamily: "Oswald, sans-serif",
-              color: tabIndex === 0 ? "#333" : "#FFF",
+              textTransform: "none",
               minWidth: "120px",
+              transition: "color 0.3s ease",
             },
             "& .Mui-selected": {
-              background: "linear-gradient(135deg, rgba(0, 174, 239, 0.4), rgba(0, 174, 239, 0.7))",
-              borderRadius: "8px",
-              boxShadow: "0px 4px 10px rgba(0, 174, 239, 0.5)",
+              color: tabIndex === 0 ? "#FF5722" : "#FFC107",
             },
           }}
         >
