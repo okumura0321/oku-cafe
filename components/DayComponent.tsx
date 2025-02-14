@@ -56,7 +56,6 @@ const menuItems = [
   {
     category: "Kids Menu",
     items: [
-      { name: "お水", image: "/images/water.png", description: "" },
       { name: "お茶", image: "/images/mugitea.jpg", description: "・麦茶" },
       {
         name: "ジュース",
@@ -68,6 +67,7 @@ const menuItems = [
         image: "/images/milk.png",
         description: "・アイス\n・ホット",
       },
+      { name: "お水", image: "/images/water.png", description: "" },
     ],
   },
 ];
