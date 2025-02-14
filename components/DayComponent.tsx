@@ -43,12 +43,12 @@ const menuItems = [
       {
         name: "紅茶",
         image: "/images/hot-tea.jpg",
-        description: "・ホット\n・アイス",
+        description: "・ストレート\n・ミルク\n・レモン",
       },
       {
         name: "ﾌﾚｰﾊﾞｰﾃｨｰ",
         image: "/images/flavor.jpg",
-        description: "・レモンティー\n・はちみつ\n",
+        description: "・フルーツ系\n・はちみつ紅茶\n・おまかせ",
       },
       { name: "お茶", image: "/images/tea.jpg", description: "・緑茶\n・麦茶" },
     ],
@@ -88,8 +88,9 @@ const DayComponent: FC = () => (
             variant="h3"
             sx={{
               fontWeight: "bold",
-              borderBottom: "3px solid black",
-              paddingBottom: "10px",
+              borderBottom: "4px solid #FF5722",
+              display: "inline-block",
+              pb: 1,
             }}
           >
             昼のメニュー
@@ -102,14 +103,7 @@ const DayComponent: FC = () => (
             sx={{ backgroundColor: dayTheme.palette.background.default }}
           >
             <AccordionSummary expandIcon={<KeyboardArrowDown sx={{ color: 'brown', fontSize: 30 }} />}            >
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: "bold",
-                  borderBottom: "2px solid black",
-                  paddingBottom: "4px",
-                }}
-              >
+              <Typography variant="h4" sx={{ fontWeight: "bold", color: "#FF5722" }}>
                 {menu.category}
               </Typography>
             </AccordionSummary>

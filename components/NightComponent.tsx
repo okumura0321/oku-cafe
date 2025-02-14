@@ -81,6 +81,16 @@ const nightMenuItems = [
         image: "/images/mistia.jpg",
         description: "・ﾐｽﾃｨｱﾄﾆｯｸ\n・ﾐｽﾃｨｱﾊﾞｯｸ\n・ｻﾝﾗｲｽﾞ\n・ﾌﾞﾗﾝ",
       },
+      {
+        name: "Amaretto",
+        image: "/images/amaretto.jpg",
+        description: "・ｱﾏﾚｯﾄｼﾞﾝｼﾞｬｰ\n・ｽﾌﾟﾓｰﾆ\n・ｽﾌﾟﾗｯｼｭ\n・ｽｲｰﾄﾊﾞｰﾄﾝｼｯﾌﾟ",
+      },
+      {
+        name: "Peche",
+        image: "/images/peche.jpg",
+        description: "・ﾌｧｼﾞｰﾈｰﾌﾞﾙ\n・ﾋﾟｰﾁｸﾞﾚｰﾌﾟﾌﾙｰﾂ\n・ﾌﾙｰﾂﾐｯｸｽ\n・ｽｲｰﾄﾗﾊﾞｰﾄﾞ",
+      },
     ],
   },
   {
@@ -122,8 +132,9 @@ const NightComponent: FC = () => (
             variant="h3"
             sx={{
               fontWeight: "bold",
-              borderBottom: "3px solid white",
-              paddingBottom: "10px",
+              borderBottom: "4px solid #FFC107",
+              display: "inline-block",
+              pb: 1,
             }}
           >
             夜のメニュー
@@ -142,11 +153,7 @@ const NightComponent: FC = () => (
             >
               <Typography
                 variant="h4"
-                sx={{
-                  fontWeight: "bold",
-                  borderBottom: "2px solid white",
-                  paddingBottom: "4px",
-                }}
+                sx={{ fontWeight: "bold", color: "#FFC107" }}
               >
                 {menu.category}
               </Typography>
