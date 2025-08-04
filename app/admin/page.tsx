@@ -23,14 +23,11 @@ type Order = {
 
 export default function AdminPage() {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(false);
 
   const fetchOrders = async () => {
-    setLoading(true);
     const res = await fetch("/api/orders");
     const data = await res.json();
     setOrders(data);
-    setLoading(false);
   };
 
   useEffect(() => {
