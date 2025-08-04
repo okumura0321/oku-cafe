@@ -1,0 +1,7 @@
+-- CreateTable
+CREATE TABLE "Order" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "items" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "status" TEXT NOT NULL DEFAULT 'pending'
+);

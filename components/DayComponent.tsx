@@ -1,11 +1,20 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import {
   Box,
   Typography,
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@mui/material";
+import Link from "next/link";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Image from "next/image";
 import { Kiwi_Maru } from "next/font/google";
@@ -72,65 +81,81 @@ const menuItems = [
   },
 ];
 
-const DayComponent: FC = () => (
-  <ThemeProvider theme={dayTheme}>
-    <div className={kiwiMaru.className}>
-      <Box
-        sx={{
-          padding: 4,
-          backgroundColor: dayTheme.palette.background.default,
-          minHeight: "100vh",
-          color: dayTheme.palette.text.primary,
-        }}
-      >
-        <Box sx={{ textAlign: "left", mb: 4 }}>
-          <Typography
-            variant="h3"
-            sx={{
-              fontWeight: "bold",
-              borderBottom: "4px solid #FF5722",
-              display: "inline-block",
-              pb: 1,
-            }}
-          >
-            昼のメニュー
-          </Typography>
-        </Box>
+const DayComponent: FC = () => {
+  const [selectedItem, setSelectedItem] = useState<{
+    name: string;
+    options: string[];
+  } | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-        {menuItems.map((menu) => (
-          <Accordion
-            key={menu.category}
-            sx={{ backgroundColor: dayTheme.palette.background.default }}
-          >
-            <AccordionSummary expandIcon={<KeyboardArrowDown sx={{ color: 'brown', fontSize: 30 }} />}            >
-              <Typography variant="h4" sx={{ fontWeight: "bold", color: "#FF5722" }}>
-                {menu.category}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails
+  return (
+    <ThemeProvider theme={dayTheme}>
+      <div className={kiwiMaru.className}>
+        <Box
+          sx={{
+            padding: 4,
+            backgroundColor: dayTheme.palette.background.default,
+            minHeight: "100vh",
+            color: dayTheme.palette.text.primary,
+          }}
+        >
+          <Link href="/my-orders">
+            <Button variant="outlined" sx={{ mb: 2 }}>
+              注文履歴を見る
+            </Button>
+          </Link>
+          <Box sx={{ textAlign: "left", mb: 4 }}>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: "bold",
+                borderBottom: "4px solid #FF5722",
+                display: "inline-block",
+                pb: 1,
+              }}
+            >
+              昼のメニュー
+            </Typography>
+          </Box>
+
+          {menuItems.map((menu) => (
+            <Accordion
+              key={menu.category}
               sx={{ backgroundColor: dayTheme.palette.background.default }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 2,
-                  justifyContent: "center",
-                  maxWidth: "1000px",
-                  margin: "0 auto",
-                }}
+              <AccordionSummary
+                expandIcon={
+                  <KeyboardArrowDown sx={{ color: "brown", fontSize: 30 }} />
+                }
               >
-                {menu.items.map((item) => (
-                  <Box
-                    key={item.name}
-                    sx={{
-                      width: { xs: "100%", sm: "48%", md: "30%" },
-                      display: "flex",
-                      gap: 2,
-                      alignItems: "left",
-                    }}
-                  >
-                    <Box sx={{ display: "flex", gap: 2, alignItems: "left" }}>
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: "bold", color: "#FF5722" }}
+                >
+                  {menu.category}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 2,
+                    justifyContent: "center",
+                    maxWidth: "1000px",
+                    margin: "0 auto",
+                  }}
+                >
+                  {menu.items.map((item) => (
+                    <Box
+                      key={item.name}
+                      sx={{
+                        width: { xs: "100%", sm: "48%", md: "30%" },
+                        display: "flex",
+                        gap: 2,
+                      }}
+                    >
                       <Box sx={{ flexShrink: 0 }}>
                         <Image
                           src={item.image}
@@ -155,17 +180,104 @@ const DayComponent: FC = () => (
                         >
                           {item.description}
                         </Typography>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          sx={{ mt: 1 }}
+                          onClick={async () => {
+                            const options = item.description
+                              .split("\n")
+                              .map((line) => line.replace("・", "").trim())
+                              .filter(Boolean);
+
+                            // 選択肢がない場合は即注文
+                            if (options.length === 0) {
+                              const response = await fetch("/api/orders", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ items: [item.name] }),
+                              });
+
+                              const data = await response.json();
+                              const stored = localStorage.getItem("myOrderIds");
+                              const ids = stored ? JSON.parse(stored) : [];
+                              ids.push(data.id);
+                              localStorage.setItem(
+                                "myOrderIds",
+                                JSON.stringify(ids)
+                              );
+
+                              alert("注文を受け付けました！");
+                              return;
+                            }
+
+                            // 選択肢がある場合はモーダルを開く
+                            setSelectedItem({ name: item.name, options });
+                            setSelectedOption(options[0]);
+                            setDialogOpen(true);
+                          }}
+                        >
+                          注文する
+                        </Button>
                       </Box>
                     </Box>
-                  </Box>
+                  ))}
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+
+          <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+            <DialogTitle>注文内容を選択</DialogTitle>
+            <DialogContent>
+              <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                {selectedItem?.name} の種類を選んでください
+              </Typography>
+              <RadioGroup
+                value={selectedOption}
+                onChange={(e) => setSelectedOption(e.target.value)}
+              >
+                {selectedItem?.options.map((opt) => (
+                  <FormControlLabel
+                    key={opt}
+                    value={opt}
+                    control={<Radio />}
+                    label={opt}
+                  />
                 ))}
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-        ))}
-      </Box>
-    </div>
-  </ThemeProvider>
-);
+              </RadioGroup>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setDialogOpen(false)}>キャンセル</Button>
+              <Button
+                variant="contained"
+                onClick={async () => {
+                  const itemLabel = `${selectedItem?.name}（${selectedOption}）`;
+                  const response = await fetch("/api/orders", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ items: [itemLabel] }),
+                  });
+
+                  const data = await response.json();
+                  const stored = localStorage.getItem("myOrderIds");
+                  const ids = stored ? JSON.parse(stored) : [];
+                  ids.push(data.id);
+                  localStorage.setItem("myOrderIds", JSON.stringify(ids));
+
+                  alert("注文を受け付けました！");
+                  setDialogOpen(false);
+                }}
+              >
+                注文する
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
+      </div>
+    </ThemeProvider>
+  );
+};
 
 export default DayComponent;

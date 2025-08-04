@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  items     String   // JSON文字列で格納（例：['コーヒー','紅茶']）
+  createdAt DateTime @default(now())
+  status    String   @default("pending") // "pending", "completed" など
+}
