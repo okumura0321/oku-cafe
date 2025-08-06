@@ -13,6 +13,8 @@ import {
   Paper,
   Chip,
 } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 type Order = {
   id: number;
@@ -22,6 +24,8 @@ type Order = {
 };
 
 export default function AdminPage() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [orders, setOrders] = useState<Order[]>([]);
 
   const fetchOrders = async () => {
@@ -63,8 +67,8 @@ export default function AdminPage() {
   };
 
   return (
-    <Box sx={{ padding: 4, maxWidth: "1000px", margin: "0 auto" }}>
-      <Typography variant="h4" gutterBottom fontWeight="bold">
+    <Box sx={{ padding: 2, maxWidth: "1000px", margin: "0 auto" }}>
+      <Typography variant="h5" gutterBottom fontWeight="bold">
         📋 注文一覧（管理画面）
       </Typography>
 
@@ -74,53 +78,92 @@ export default function AdminPage() {
         </Button>
       </Box>
 
-      <Paper elevation={3} sx={{ overflowX: "auto", borderRadius: 3 }}>
-        <Table>
-          <TableHead sx={{ backgroundColor: "#f0f0f0" }}>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>商品</TableCell>
-              <TableCell>注文日時</TableCell>
-              <TableCell>ステータス</TableCell>
-              <TableCell>操作</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orders.map((order) => (
-              <TableRow key={order.id}>
-                <TableCell>{order.id}</TableCell>
-                <TableCell>{JSON.parse(order.items).join(", ")}</TableCell>
-                <TableCell>
-                  {new Date(order.createdAt).toLocaleString("ja-JP")}
-                </TableCell>
-                <TableCell>{renderStatus(order.status)}</TableCell>
-                <TableCell>
-                  {order.status === "pending" && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => markAsCompleted(order.id)}
-                      sx={{ whiteSpace: "nowrap" }} // ← 改行防止！
-                    >
-                      完了にする
-                    </Button>
-                  )}
-                  {order.status === "completed" && (
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => deleteOrder(order.id)}
-                      sx={{ ml: 1 }}
-                    >
-                      削除
-                    </Button>
-                  )}
-                </TableCell>
+      {isMobile ? (
+        // --- スマホ向けカード表示 ---
+        <Box display="flex" flexDirection="column" gap={2}>
+          {orders.map((order) => (
+            <Paper key={order.id} elevation={2} sx={{ p: 2, borderRadius: 2 }}>
+              <Typography fontWeight="bold">ID: {order.id}</Typography>
+              <Typography>
+                商品: {JSON.parse(order.items).join(", ")}
+              </Typography>
+              <Typography>
+                注文日時: {new Date(order.createdAt).toLocaleString("ja-JP")}
+              </Typography>
+              <Box mt={1}>{renderStatus(order.status)}</Box>
+              <Box mt={2} display="flex" gap={1}>
+                {order.status === "pending" && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => markAsCompleted(order.id)}
+                  >
+                    完了にする
+                  </Button>
+                )}
+                {order.status === "completed" && (
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => deleteOrder(order.id)}
+                  >
+                    削除
+                  </Button>
+                )}
+              </Box>
+            </Paper>
+          ))}
+        </Box>
+      ) : (
+        // --- デスクトップ向けテーブル表示 ---
+        <Paper elevation={3} sx={{ overflowX: "auto", borderRadius: 3 }}>
+          <Table>
+            <TableHead sx={{ backgroundColor: "#f0f0f0" }}>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>商品</TableCell>
+                <TableCell>注文日時</TableCell>
+                <TableCell>ステータス</TableCell>
+                <TableCell>操作</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
+            </TableHead>
+            <TableBody>
+              {orders.map((order) => (
+                <TableRow key={order.id}>
+                  <TableCell>{order.id}</TableCell>
+                  <TableCell>{JSON.parse(order.items).join(", ")}</TableCell>
+                  <TableCell>
+                    {new Date(order.createdAt).toLocaleString("ja-JP")}
+                  </TableCell>
+                  <TableCell>{renderStatus(order.status)}</TableCell>
+                  <TableCell>
+                    {order.status === "pending" && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => markAsCompleted(order.id)}
+                        sx={{ whiteSpace: "nowrap" }}
+                      >
+                        完了にする
+                      </Button>
+                    )}
+                    {order.status === "completed" && (
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => deleteOrder(order.id)}
+                        sx={{ ml: 1 }}
+                      >
+                        削除
+                      </Button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      )}
     </Box>
   );
 }
