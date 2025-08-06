@@ -207,10 +207,16 @@ const NightComponent: FC = () => {
                       sx={{
                         width: { xs: "100%", sm: "48%", md: "30%" },
                         display: "flex",
-                        gap: 2,
+                        flexDirection: "column",
+                        border: "1px solid #444",
+                        borderRadius: 2,
+                        padding: 2,
+                        boxSizing: "border-box",
+                        minHeight: 260, // ← 以前より低く
+                        backgroundColor: "#2C2C3A",
                       }}
                     >
-                      <Box sx={{ flexShrink: 0 }}>
+                      <Box sx={{ textAlign: "center", mb: 1 }}>
                         <Image
                           src={item.image}
                           alt={item.name}
@@ -219,26 +225,34 @@ const NightComponent: FC = () => {
                           style={{ borderRadius: "8px" }}
                         />
                       </Box>
-                      <Box>
-                        <Typography
-                          variant="h5"
-                          gutterBottom
-                          sx={{ textAlign: "left", fontWeight: 550 }}
-                        >
-                          {item.name}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          sx={{ whiteSpace: "pre-line", textAlign: "left" }}
-                        >
-                          {item.description}
-                        </Typography>
 
+                      <Typography
+                        variant="h6"
+                        gutterBottom
+                        sx={{ fontWeight: 550, textAlign: "left", mb: 0.5 }}
+                      >
+                        {item.name}
+                      </Typography>
+
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          whiteSpace: "pre-line",
+                          textAlign: "left",
+                          color: "gray",
+                          fontSize: "0.85rem",
+                          mb: 1,
+                          flexGrow: 0,
+                        }}
+                      >
+                        {item.description}
+                      </Typography>
+
+                      <Box sx={{ textAlign: "right", mt: "auto" }}>
                         <Button
                           variant="contained"
                           color="primary"
                           size="small"
-                          sx={{ mt: 1}}
                           onClick={async () => {
                             const options =
                               menu.category === "Whisky"
@@ -250,7 +264,6 @@ const NightComponent: FC = () => {
                                     )
                                     .filter(Boolean);
 
-                            // 選択肢がない場合は即注文
                             if (options.length === 0) {
                               const response = await fetch("/api/orders", {
                                 method: "POST",
@@ -266,12 +279,10 @@ const NightComponent: FC = () => {
                                 "myOrderIds",
                                 JSON.stringify(ids)
                               );
-
                               alert("注文を受け付けました！");
                               return;
                             }
 
-                            // 選択肢がある場合はモーダルを開く
                             setSelectedItem({ name: item.name, options });
                             setSelectedOption(options[0]);
                             setDialogOpen(true);

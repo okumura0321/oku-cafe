@@ -76,7 +76,11 @@ const menuItems = [
         image: "/images/milk.png",
         description: "・アイス\n・ホット",
       },
-      { name: "その他", image: "/images/water.png", description: "・お水\n・白湯" },
+      {
+        name: "その他",
+        image: "/images/water.png",
+        description: "・お水\n・白湯",
+      },
     ],
   },
 ];
@@ -148,80 +152,87 @@ const DayComponent: FC = () => {
                   }}
                 >
                   {menu.items.map((item) => (
-                    <Box
-                      key={item.name}
-                      sx={{
-                        width: { xs: "100%", sm: "48%", md: "30%" },
-                        display: "flex",
-                        gap: 2,
-                      }}
-                    >
-                      <Box sx={{ flexShrink: 0 }}>
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          width={150}
-                          height={150}
-                          style={{ borderRadius: "8px" }}
-                        />
-                      </Box>
-                      <Box>
-                        <Typography
-                          variant="h5"
-                          gutterBottom
-                          sx={{ textAlign: "left", fontWeight: 550 }}
-                        >
-                          {item.name}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          color="textSecondary"
-                          sx={{ whiteSpace: "pre-line", textAlign: "left" }}
-                        >
-                          {item.description}
-                        </Typography>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                          sx={{ mt: 1 }}
-                          onClick={async () => {
-                            const options = item.description
-                              .split("\n")
-                              .map((line) => line.replace("・", "").trim())
-                              .filter(Boolean);
+<Box
+  key={item.name}
+  sx={{
+    width: { xs: "100%", sm: "48%", md: "30%" },
+    display: "flex",
+    flexDirection: "column",
+    border: "1px solid #ddd",
+    borderRadius: 2,
+    padding: 2,
+    boxSizing: "border-box",
+    minHeight: 260, // 縦幅を節約
+    backgroundColor: "#fffde7", // より柔らかい背景色（昼らしさ）
+  }}
+>
+  <Box sx={{ textAlign: "center", mb: 1 }}>
+    <Image
+      src={item.image}
+      alt={item.name}
+      width={140}
+      height={140}
+      style={{ borderRadius: "8px" }}
+    />
+  </Box>
 
-                            // 選択肢がない場合は即注文
-                            if (options.length === 0) {
-                              const response = await fetch("/api/orders", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ items: [item.name] }),
-                              });
+  <Typography
+    variant="h6"
+    gutterBottom
+    sx={{ textAlign: "left", fontWeight: 550, mb: 0.5 }}
+  >
+    {item.name}
+  </Typography>
 
-                              const data = await response.json();
-                              const stored = localStorage.getItem("myOrderIds");
-                              const ids = stored ? JSON.parse(stored) : [];
-                              ids.push(data.id);
-                              localStorage.setItem(
-                                "myOrderIds",
-                                JSON.stringify(ids)
-                              );
+  <Typography
+    variant="body2"
+    sx={{
+      whiteSpace: "pre-line",
+      textAlign: "left",
+      color: "#555",
+      fontSize: "0.85rem",
+      mb: 1,
+    }}
+  >
+    {item.description}
+  </Typography>
 
-                              alert("注文を受け付けました！");
-                              return;
-                            }
+  <Box sx={{ textAlign: "right", mt: "auto" }}>
+    <Button
+      variant="contained"
+      color="primary"
+      size="small"
+      onClick={async () => {
+        const options = item.description
+          .split("\n")
+          .map((line) => line.replace("・", "").trim())
+          .filter(Boolean);
 
-                            // 選択肢がある場合はモーダルを開く
-                            setSelectedItem({ name: item.name, options });
-                            setSelectedOption(options[0]);
-                            setDialogOpen(true);
-                          }}
-                        >
-                          注文する
-                        </Button>
-                      </Box>
-                    </Box>
+        if (options.length === 0) {
+          const response = await fetch("/api/orders", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ items: [item.name] }),
+          });
+
+          const data = await response.json();
+          const stored = localStorage.getItem("myOrderIds");
+          const ids = stored ? JSON.parse(stored) : [];
+          ids.push(data.id);
+          localStorage.setItem("myOrderIds", JSON.stringify(ids));
+          alert("注文を受け付けました！");
+          return;
+        }
+
+        setSelectedItem({ name: item.name, options });
+        setSelectedOption(options[0]);
+        setDialogOpen(true);
+      }}
+    >
+      注文する
+    </Button>
+  </Box>
+</Box>
                   ))}
                 </Box>
               </AccordionDetails>
