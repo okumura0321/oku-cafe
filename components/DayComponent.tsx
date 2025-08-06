@@ -76,7 +76,7 @@ const menuItems = [
         image: "/images/milk.png",
         description: "・アイス\n・ホット",
       },
-      { name: "お水", image: "/images/water.png", description: "" },
+      { name: "その他", image: "/images/water.png", description: "・お水\n・白湯" },
     ],
   },
 ];
