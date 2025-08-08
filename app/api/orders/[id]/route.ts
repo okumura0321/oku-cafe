@@ -4,8 +4,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function PATCH(req: NextRequest, context: any) {
+// PATCH: ステータス更新（completed / pending）
+export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
   const { id } = context.params;
   const { status } = await req.json();
 
@@ -17,8 +17,8 @@ export async function PATCH(req: NextRequest, context: any) {
   return NextResponse.json(updated);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function DELETE(req: NextRequest, context: any) {
+// DELETE: 注文の削除（物理削除 ※後で論理削除に対応可能）
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
   const { id } = context.params;
 
   await prisma.order.delete({

@@ -47,6 +47,15 @@ export default function AdminPage() {
     fetchOrders();
   };
 
+  const markAsPending = async (id: number) => {
+    await fetch(`/api/orders/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "pending" }),
+    });
+    fetchOrders();
+  };
+
   const deleteOrder = async (id: number) => {
     if (confirm("本当に削除しますか？")) {
       await fetch(`/api/orders/${id}`, {
@@ -79,7 +88,6 @@ export default function AdminPage() {
       </Box>
 
       {isMobile ? (
-        // --- スマホ向けカード表示 ---
         <Box display="flex" flexDirection="column" gap={2}>
           {orders.map((order) => (
             <Paper key={order.id} elevation={2} sx={{ p: 2, borderRadius: 2 }}>
@@ -91,7 +99,7 @@ export default function AdminPage() {
                 注文日時: {new Date(order.createdAt).toLocaleString("ja-JP")}
               </Typography>
               <Box mt={1}>{renderStatus(order.status)}</Box>
-              <Box mt={2} display="flex" gap={1}>
+              <Box mt={2} display="flex" gap={1} flexWrap="wrap">
                 {order.status === "pending" && (
                   <Button
                     variant="contained"
@@ -102,20 +110,28 @@ export default function AdminPage() {
                   </Button>
                 )}
                 {order.status === "completed" && (
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={() => deleteOrder(order.id)}
-                  >
-                    削除
-                  </Button>
+                  <>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => markAsPending(order.id)}
+                    >
+                      未完了に戻す
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => deleteOrder(order.id)}
+                    >
+                      削除
+                    </Button>
+                  </>
                 )}
               </Box>
             </Paper>
           ))}
         </Box>
       ) : (
-        // --- デスクトップ向けテーブル表示 ---
         <Paper elevation={3} sx={{ overflowX: "auto", borderRadius: 3 }}>
           <Table>
             <TableHead sx={{ backgroundColor: "#f0f0f0" }}>
@@ -148,14 +164,24 @@ export default function AdminPage() {
                       </Button>
                     )}
                     {order.status === "completed" && (
-                      <Button
-                        variant="outlined"
-                        color="error"
-                        onClick={() => deleteOrder(order.id)}
-                        sx={{ ml: 1 }}
-                      >
-                        削除
-                      </Button>
+                      <>
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => markAsPending(order.id)}
+                          sx={{ whiteSpace: "nowrap", mr: 1 }}
+                        >
+                          未完了に戻す
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          onClick={() => deleteOrder(order.id)}
+                          sx={{ whiteSpace: "nowrap" }}
+                        >
+                          削除
+                        </Button>
+                      </>
                     )}
                   </TableCell>
                 </TableRow>
