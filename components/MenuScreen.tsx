@@ -6,11 +6,18 @@ import Link from "next/link";
 import MenuList from "./MenuList";
 import OrderDialog from "./OrderDialog";
 import { useOrder } from "@/hooks/useOrder";
+import { Theme } from "@mui/material/styles"; // ←追加
+
+// 型定義を追加
+interface MenuItemType {
+  name: string;
+  description: string;
+}
 
 interface Props {
   title: string;
-  menuItems: any[];
-  theme: any;
+  menuItems: MenuItemType[];
+  theme: Theme;
   themeColor: string;
   bgColor: string;
   noteCategory?: string;
@@ -31,7 +38,7 @@ const MenuScreen: React.FC<Props> = ({
   const [dialogOpen, setDialogOpen] = useState(false);
   const { submitOrder } = useOrder();
 
-  const handleOrder = (item: any, category: string) => {
+  const handleOrder = (item: MenuItemType, category: string) => { // ← 修正
     const isNoteCategory = noteCategory && category === noteCategory;
     const options = isNoteCategory
       ? noteOptions || []
@@ -63,17 +70,15 @@ const MenuScreen: React.FC<Props> = ({
           backgroundColor: bgColor,
           minHeight: "100vh",
           color: theme.palette.text.primary,
-          fontFamily: '"Kiwi Maru", serif', // 明示的にフォント指定
+          fontFamily: '"Kiwi Maru", serif',
         }}
       >
-        {/* 注文履歴ボタン */}
         <Box sx={{ mb: 2, textAlign: "left" }}>
           <Link href="/my-orders">
             <Button variant="outlined">注文履歴を見る</Button>
           </Link>
         </Box>
 
-        {/* タイトル */}
         <Box sx={{ textAlign: "left", mb: 4 }}>
           <Typography
             variant="h3"
@@ -88,7 +93,6 @@ const MenuScreen: React.FC<Props> = ({
           </Typography>
         </Box>
 
-        {/* メニュー一覧 */}
         <MenuList
           menuItems={menuItems}
           themeColor={themeColor}
@@ -96,7 +100,6 @@ const MenuScreen: React.FC<Props> = ({
           onOrder={handleOrder}
         />
 
-        {/* ダイアログ */}
         <OrderDialog
           open={dialogOpen}
           selectedItem={selectedItem}
