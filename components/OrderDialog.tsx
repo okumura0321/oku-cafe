@@ -11,7 +11,24 @@ import {
   Radio,
 } from "@mui/material";
 
-const OrderDialog = ({
+type SelectedItem = { name: string; options: string[] } | null;
+
+interface ThemeStyle {
+  bgColor?: string;
+  textColor?: string;
+}
+
+interface Props {
+  open: boolean;
+  selectedItem: SelectedItem;
+  selectedOption: string;
+  setSelectedOption: (value: string) => void;
+  onClose: () => void;
+  onConfirm: () => void;
+  themeStyle?: ThemeStyle;
+}
+
+const OrderDialog: React.FC<Props> = ({
   open,
   selectedItem,
   selectedOption,
@@ -35,7 +52,11 @@ const OrderDialog = ({
       <Typography variant="subtitle1" sx={{ mb: 1 }}>
         {selectedItem?.name} の種類を選んでください
       </Typography>
-      <RadioGroup value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
+
+      <RadioGroup
+        value={selectedOption}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSelectedOption(e.target.value)}
+      >
         {selectedItem?.options.map((opt) => (
           <FormControlLabel
             key={opt}
@@ -47,6 +68,7 @@ const OrderDialog = ({
         ))}
       </RadioGroup>
     </DialogContent>
+
     <DialogActions>
       <Button onClick={onClose}>キャンセル</Button>
       <Button variant="contained" onClick={onConfirm}>

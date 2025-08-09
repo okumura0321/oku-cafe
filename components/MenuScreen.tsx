@@ -6,17 +6,23 @@ import Link from "next/link";
 import MenuList from "./MenuList";
 import OrderDialog from "./OrderDialog";
 import { useOrder } from "@/hooks/useOrder";
-import { Theme } from "@mui/material/styles"; // ←追加
+import { Theme } from "@mui/material/styles";
 
-// 型定義を追加
-interface MenuItemType {
+// ---- 型定義 ----
+export interface MenuItemType {
   name: string;
   description: string;
+  image?: string;
+}
+
+export interface MenuGroup {
+  category: string;
+  items: MenuItemType[];
 }
 
 interface Props {
   title: string;
-  menuItems: MenuItemType[];
+  menuItems: MenuGroup[];
   theme: Theme;
   themeColor: string;
   bgColor: string;
@@ -38,18 +44,22 @@ const MenuScreen: React.FC<Props> = ({
   const [dialogOpen, setDialogOpen] = useState(false);
   const { submitOrder } = useOrder();
 
-  const handleOrder = (item: MenuItemType, category: string) => { // ← 修正
+  // カテゴリ名が必要なので第2引数で受ける
+  const handleOrder = (item: MenuItemType, category: string) => {
     const isNoteCategory = noteCategory && category === noteCategory;
+
     const options = isNoteCategory
       ? noteOptions || []
       : item.description
           .split("\n")
-          .map((line: string) => line.replace("・", "").trim())
+          .map((line) => line.replace("・", "").trim())
           .filter(Boolean);
 
     if (options.length === 0) {
+      // オプションがない場合は即送信
       submitOrder(item.name);
     } else {
+      // ダイアログでオプション選択
       setSelectedItem({ name: item.name, options });
       setSelectedOption(options[0]);
       setDialogOpen(true);
@@ -73,12 +83,14 @@ const MenuScreen: React.FC<Props> = ({
           fontFamily: '"Kiwi Maru", serif',
         }}
       >
+        {/* 履歴リンク */}
         <Box sx={{ mb: 2, textAlign: "left" }}>
           <Link href="/my-orders">
             <Button variant="outlined">注文履歴を見る</Button>
           </Link>
         </Box>
 
+        {/* タイトル */}
         <Box sx={{ textAlign: "left", mb: 4 }}>
           <Typography
             variant="h3"
@@ -93,6 +105,7 @@ const MenuScreen: React.FC<Props> = ({
           </Typography>
         </Box>
 
+        {/* メニュー一覧（カテゴリごと） */}
         <MenuList
           menuItems={menuItems}
           themeColor={themeColor}
@@ -100,6 +113,7 @@ const MenuScreen: React.FC<Props> = ({
           onOrder={handleOrder}
         />
 
+        {/* オプション選択ダイアログ */}
         <OrderDialog
           open={dialogOpen}
           selectedItem={selectedItem}
