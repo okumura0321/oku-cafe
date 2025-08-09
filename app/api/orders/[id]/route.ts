@@ -1,12 +1,14 @@
-// app/api/orders/[id]/route.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 // PATCH: ステータス更新（completed / pending）
-export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
-  const { id } = context.params;
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   const { status } = await req.json();
 
   const updated = await prisma.order.update({
@@ -17,9 +19,12 @@ export async function PATCH(req: NextRequest, context: { params: { id: string } 
   return NextResponse.json(updated);
 }
 
-// DELETE: 注文の削除（物理削除 ※後で論理削除に対応可能）
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
-  const { id } = context.params;
+// DELETE: 注文の削除
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
 
   await prisma.order.delete({
     where: { id: Number(id) },
