@@ -145,27 +145,32 @@ export default function DeletedOrdersPage() {
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", sm: "repeat(4, 1fr)" },
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(3, 1fr)" },
             gap: 2,
             alignItems: "center",
           }}
         >
-          <TextField
-            label="注文日時（From）"
-            type="date"
-            InputLabelProps={{ shrink: true }}
-            value={from}
-            onChange={(e) => setFrom(e.target.value)}
-            helperText="JSTで検索（当日0:00から）"
-          />
-          <TextField
-            label="注文日時（To）"
-            type="date"
-            InputLabelProps={{ shrink: true }}
-            value={to}
-            onChange={(e) => setTo(e.target.value)}
-            helperText="JSTで検索（当日23:59:59まで）"
-          />
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <TextField
+              label="注文日時（From）"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              value={from}
+              onChange={(e) => setFrom(e.target.value)}
+              helperText="JSTで検索（当日0:00から）"
+              fullWidth
+            />
+            <TextField
+              label="注文日時（To）"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              value={to}
+              onChange={(e) => setTo(e.target.value)}
+              helperText="JSTで検索（当日23:59:59まで）"
+              fullWidth
+            />
+          </Box>
+
           <Autocomplete
             multiple
             options={allItems}
@@ -176,6 +181,7 @@ export default function DeletedOrdersPage() {
               <TextField {...params} label="商品の種類（複数選択）" />
             )}
           />
+
           <Box sx={{ display: "flex", gap: 1 }}>
             <Button variant="contained" onClick={handleSearch} disabled={loading}>
               検索
