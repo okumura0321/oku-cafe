@@ -6,9 +6,9 @@ const prisma = new PrismaClient();
 // PATCH: ステータス更新（completed / pending）
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await params;
+  const { id } = params;
   const { status } = await req.json();
 
   const updated = await prisma.order.update({
@@ -19,15 +19,18 @@ export async function PATCH(
   return NextResponse.json(updated);
 }
 
-// DELETE: 注文の削除
+// DELETE: 論理削除（deletedAt を設定）
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await params;
+  const { id } = params;
 
-  await prisma.order.delete({
+  await prisma.order.update({
     where: { id: Number(id) },
+    data: {
+      deletedAt: new Date(),
+    },
   });
 
   return NextResponse.json({ message: "注文を削除しました" });

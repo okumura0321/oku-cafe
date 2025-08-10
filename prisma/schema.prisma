@@ -9,7 +9,10 @@ datasource db {
 
 model Order {
   id        Int      @id @default(autoincrement())
-  items     String   // JSON文字列で格納（例：['コーヒー','紅茶']）
+  items     String
+  status    String   @default("pending")
   createdAt DateTime @default(now())
-  status    String   @default("pending") // "pending", "completed" など
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  @@index([deletedAt])
 }
