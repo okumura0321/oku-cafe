@@ -1,8 +1,9 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Kiwi_Maru } from "next/font/google"; // ★ 追加
+import { Kiwi_Maru } from "next/font/google";
 import "./globals.css";
+import Providers from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,7 @@ const kiwiMaru = Kiwi_Maru({
   weight: ["400", "500"],
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-kiwi-maru", // ★ 可変フォントとして
+  variable: "--font-kiwi-maru",
 });
 
 export const metadata: Metadata = {
@@ -28,15 +29,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ja">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${kiwiMaru.variable} font-sans`}
       >
-        {children}
+        {/* MUIはクライアント側で初期化 */}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

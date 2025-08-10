@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import Link from "next/link";
 
 type Order = {
   id: number;
@@ -81,9 +82,16 @@ export default function AdminPage() {
         📋 注文一覧（管理画面）
       </Typography>
 
-      <Box sx={{ textAlign: "right", mb: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mb: 2 }}>
         <Button variant="outlined" onClick={fetchOrders}>
           更新
+        </Button>
+        <Button
+          variant="outlined"
+          component={Link}
+          href="/admin/deleted"
+        >
+          削除済み一覧
         </Button>
       </Box>
 
