@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import {
   Box,
   Typography,
@@ -19,9 +20,9 @@ import { useTheme } from "@mui/material/styles";
 
 type Order = {
   id: number;
-  items: string; // JSON文字列
+  items: string;
   status: string;
-  createdAt: string;      // 注文日時
+  createdAt: string;
   deletedAt: string | null;
 };
 
@@ -31,11 +32,11 @@ export default function DeletedOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // フィルタUI用（注文日時で検索）
-  const [from, setFrom] = useState<string>(""); // YYYY-MM-DD
+  // フィルタUI用
+  const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
   const [allItems, setAllItems] = useState<string[]>([]);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]); // 候補のみ
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const renderStatus = (status: string) => {
     if (status === "pending") {
@@ -52,8 +53,8 @@ export default function DeletedOrdersPage() {
     items?: string[];
   }) => {
     const qs = new URLSearchParams();
-    if (params?.from) qs.set("from", params.from); // createdAt で検索
-    if (params?.to) qs.set("to", params.to);       // createdAt で検索
+    if (params?.from) qs.set("from", params.from);
+    if (params?.to) qs.set("to", params.to);
     params?.items?.forEach((it) => it && qs.append("item", it));
 
     setLoading(true);
@@ -71,9 +72,7 @@ export default function DeletedOrdersPage() {
         data.forEach((o) => {
           try {
             (JSON.parse(o.items) as string[]).forEach((x) => set.add(x));
-          } catch {
-            /* noop */
-          }
+          } catch {}
         });
         setAllItems(Array.from(set).sort());
       }
@@ -108,23 +107,32 @@ export default function DeletedOrdersPage() {
       let parsed: string[] = [];
       try {
         parsed = JSON.parse(o.items) as string[];
-      } catch {
-        /* noop */
-      }
-      return {
-        ...o,
-        itemsArray: parsed,
-      };
+      } catch {}
+      return { ...o, itemsArray: parsed };
     });
   }, [orders]);
 
   return (
     <Box sx={{ p: 2, maxWidth: 1100, m: "0 auto" }}>
-      <Typography variant="h5" gutterBottom fontWeight="bold">
-        🗑️ 削除済み注文一覧（論理削除）
-      </Typography>
+      {/* タイトルと戻るボタンを縦並び */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          mb: 2,
+          gap: 1,
+        }}
+      >
+        <Typography variant="h5" fontWeight="bold">
+          🗑️ 削除済み注文一覧（論理削除）
+        </Typography>
+        <Button component={Link} href="/admin" variant="outlined">
+          管理画面に戻る
+        </Button>
+      </Box>
 
-      {/* フィルタUI（注文日時で検索） */}
+      {/* フィルタUI */}
       <Paper
         elevation={0}
         sx={{
@@ -137,11 +145,7 @@ export default function DeletedOrdersPage() {
         <Box
           sx={{
             display: "grid",
-            // JSの条件分岐ではなく、レスポンシブCSSで列数を制御
-            gridTemplateColumns: {
-              xs: "1fr",            // ~sm
-              sm: "repeat(4, 1fr)", // sm~
-            },
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(4, 1fr)" },
             gap: 2,
             alignItems: "center",
           }}
@@ -164,16 +168,12 @@ export default function DeletedOrdersPage() {
           />
           <Autocomplete
             multiple
-            options={allItems} // 手入力不可（候補のみ）
+            options={allItems}
             value={selectedItems}
             onChange={(_e, v) => setSelectedItems(v)}
             filterSelectedOptions
             renderInput={(params) => (
-              <TextField
-                {...params}
-                label="商品の種類（複数選択）"
-                placeholder="候補から選択"
-              />
+              <TextField {...params} label="商品の種類（複数選択）" />
             )}
           />
           <Box sx={{ display: "flex", gap: 1 }}>
@@ -187,7 +187,7 @@ export default function DeletedOrdersPage() {
         </Box>
       </Paper>
 
-      {/* 一覧（Table サイズは固定） */}
+      {/* 一覧 */}
       <Paper elevation={3} sx={{ overflowX: "auto", borderRadius: 3 }}>
         <Table size="small">
           <TableHead sx={{ backgroundColor: "#f0f0f0" }}>
