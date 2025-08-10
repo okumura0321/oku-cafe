@@ -1,4 +1,5 @@
 // data/nightMenu.ts
+
 export const nightMenuItems = [
   {
     category: "Beer",
@@ -25,7 +26,36 @@ export const nightMenuItems = [
         image: "/images/vodka.jpg",
         description: "・ｳｫｯｶﾄﾆｯｸ\n・ﾓｽｺﾐｭｰﾙ\n・ｽｸﾘｭｰﾄﾞﾗｲﾊﾞｰ\n・ﾌﾞﾙﾄﾞｯｸ",
       },
-      // ...省略（もとのNightComponentの内容に合わせて記述）
+      {
+        name: "Rum",
+        image: "/images/rum.jpg",
+        description: "・ﾗﾑｺｰｸ\n・ﾗﾑﾄﾆｯｸ\n・ｷｭｰﾊﾞﾝｽｸﾘｭｰ\n・ﾊﾞｶﾙﾃﾞｨ",
+      },
+      {
+        name: "Dita",
+        image: "/images/dita.jpg",
+        description: "・ﾗｲﾁｵﾚﾝｼﾞ\n・ﾁｬｲﾅﾌﾞﾙｰ\n・ｱﾝｼｬﾝﾃ\n・ﾚﾃﾞｨﾃﾞｲ",
+      },
+      {
+        name: "Cassis",
+        image: "/images/cassis.jpg",
+        description: "・ｶｼｽﾊﾞｯｸ\n・ｶｼｽｵﾚﾝｼﾞ\n・ｶｼｽﾐﾙｸ\n・ｵｰﾛﾗ",
+      },
+      {
+        name: "Mistia",
+        image: "/images/mistia.jpg",
+        description: "・ﾐｽﾃｨｱﾄﾆｯｸ\n・ﾐｽﾃｨｱﾊﾞｯｸ\n・ｻﾝﾗｲｽﾞ\n・ﾌﾞﾗﾝ",
+      },
+      {
+        name: "Amaretto",
+        image: "/images/amaretto.jpg",
+        description: "・ｱﾏﾚｯﾄｼﾞﾝｼﾞｬｰ\n・ｽﾌﾟﾓｰﾆ\n・ｽﾌﾟﾗｯｼｭ\n・ｽｲｰﾄﾊﾞｰﾄﾝｼｯﾌﾟ",
+      },
+      {
+        name: "Peche",
+        image: "/images/peche.jpg",
+        description: "・ﾌｧｼﾞｰﾈｰﾌﾞﾙ\n・ﾋﾟｰﾁｸﾞﾚｰﾌﾟﾌﾙｰﾂ\n・ﾌﾙｰﾂﾐｯｸｽ\n・ｽｲｰﾄﾗﾊﾞｰﾄﾞ",
+      },
     ],
   },
   {
